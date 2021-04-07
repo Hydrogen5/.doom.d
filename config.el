@@ -84,4 +84,5 @@
   (map! :map company-active-map
         "<tab>" #'company-complete-selection
         "RET" 'nil
-   ))
+   )
+  (setq company-idle-delay 0.1))
