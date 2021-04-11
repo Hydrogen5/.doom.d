@@ -23,6 +23,7 @@
 (map! :leader :desc "Switch to last workspace" :g "TAB TAB" #'+workspace/other)
 (map! :leader :desc "Display tab bar" :g "TAB `" #'+workspace/display)
 (map! :leader :desc "Open a new terminal" :g "`" #'vterm)
+(map! :leader :desc "Toggle" "T" doom-leader-toggle-map)
 
 ;; config completion
 (after! company
