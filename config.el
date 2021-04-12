@@ -9,6 +9,21 @@
 (setq user-full-name "Hydrogen5"
       user-mail-address "hydrogen5plus@gmail.com")
 
+(defmacro k-time (&rest body)
+  "Measure and return the time it takes evaluating BODY."
+   `(let ((time (current-time))) ,@body (float-time (time-since time))))
+
+;; Set garbage collection threshold to 512M.
+(setq gc-cons-threshold #x20000000)
+
+;; When idle for 15sec run the GC no matter what.
+(defvar k-gc-timer
+  (run-with-idle-timer
+   15 t (lambda ()
+          (message
+           "Garbage Collector has run for %.06fsec"
+           (k-time (garbage-collect))))))
+
 ;; config language
 (after! rustic
   (setq rustic-lsp-server 'rust-analyzer))
@@ -32,3 +47,15 @@
         "RET" 'nil
    )
   (setq company-idle-delay 0.1))
+
+
+(defun write-clipboard-image ()
+  "write an image from clipboard"
+  (interactive)
+  (let* ((path "~/.photocache/")
+         (fname (format-time-string "%Y%m%d%H%M%S" (current-time)))
+         (image-file (concat path fname ".jpg")))
+    (if (not (file-exists-p path))
+        (mkdir path))
+    (shell-command (concat "pngpaste " image-file))
+    (message image-file)))
