@@ -1,6 +1,25 @@
 ;;; hydrogen5/ui/config.el -*- lexical-binding: t; -*-
 
-(setq doom-font (font-spec :family "Fira Code" :size 15 :style "Retina"))
+(setq doom-font (font-spec :family "Fira Code" :size 16 :style 'Retina)
+      doom-unicode-font (font-spec :family "Sarasa Mono SC" :size 16 :weight 'Regular)
+      doom-variable-pitch-font (font-spec :family "Sarasa Mono SC" :size 16 :weight 'Regular)
+      doom-big-font (font-spec :family "Sarasa Mono SC" :size 24 :weight 'Regular)
+)
+(defun hydrogen5/set-fonts ()
+  (set-fontset-font "fontset-default" 'unicode (font-spec :family "Sarasa Mono SC" :size 16 :weight 'Regular) nil 'prepend)
+  (set-fontset-font "fontset-default" 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend))
+(add-hook! 'after-setting-font-hook :append 'hydrogen5/set-fonts) ;;言
+;; (push "Sarasa Mono SC" doom-unicode-extra-fonts)
+
+(setq +ligatures-extra-symbols
+  '(
+    ;; org
+    :name          "»"
+    :src_block     "»"
+    :src_block_end  "«"
+    :quote         "“"
+    :quote_end     "”"
+    ))
 
 ;; auto change theme
 (defun check-now-is-day-or-night ()
@@ -26,16 +45,25 @@
 
 (setq org-directory "~/org/")
 
-(setq splah-image-list
+(setq splah-image-list-light
       '("lambda.png"
-        "nasa.jpeg"
+        "nasa.png"
         "nerv.png"
         "rust.png"
         "scp.png"
         "switch.png"))
+
+(setq splah-image-list-dark
+      '("nasa.png"
+        "nerv.png"
+        ))
+
 (setq doom-private-etc-dir (concat doom-private-dir "etc/"))
 (setq fancy-splash-image
       (concat doom-private-etc-dir
-       (nth (random (length splah-image-list)) splah-image-list)))
+        (if (check-now-is-day-or-night)
+            (nth (random (length splah-image-list-light)) splah-image-list-light)
+            (nth (random (length splah-image-list-dark )) splah-image-list-dark ))))
 
-(setq display-line-numbers-type t)
+
+(setq display-line-numbers-type 'relative)

@@ -12,8 +12,8 @@
                                    (edit . "+++ ")))
   (map! :map telega-msg-button-map
         "k" nil
-        :leader :desc "telega-prefix" :g "t" telega-prefix-map
-        :desc "Telega" :g "C-c t" telega-prefix-map
+        :map telega-chat-mode-map
+        :desc "telega-prefix" :g "C-c t" telega-prefix-map
         )
 
   :hook

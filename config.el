@@ -28,6 +28,15 @@
 (after! rustic
   (setq rustic-lsp-server 'rust-analyzer))
 
+;; (after! lsp-clients
+  ;; (set-lsp-priority! 'clangd 1))
+(setq lsp-clients-clangd-args '("-j=3"
+                                "--background-index"
+                                "--clang-tidy"
+                                "--completion-style=detailed"
+                                "--header-insertion=never"))
+(after! lsp-clangd (set-lsp-priority! 'clangd 2))
+
 ;; bind keys
 (map! :leader :desc "Treemacs" :g "0" #'treemacs-select-window)
 (map! :leader
@@ -59,3 +68,10 @@
         (mkdir path))
     (shell-command (concat "pngpaste " image-file))
     (message image-file)))
+
+
+(setq auto-mode-alist
+   (append
+     '(("\\.agda\\'" . agda2-mode)
+       ("\\.lagda.md\\'" . agda2-mode))
+     auto-mode-alist))
