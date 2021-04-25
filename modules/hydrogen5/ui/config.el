@@ -51,11 +51,15 @@
         "nerv.png"
         "rust.png"
         "scp.png"
+        "vscode.png"
+        "sublime.png"
         "switch.png"))
 
 (setq splah-image-list-dark
       '("nasa.png"
         "nerv.png"
+        "vscode.png"
+        "sublime.png"
         ))
 
 (setq doom-private-etc-dir (concat doom-private-dir "etc/"))
